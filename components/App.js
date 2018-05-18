@@ -14,11 +14,18 @@ App = React.createClass({
         this.setState({
           loading: true  
         });
+
         this.getGif(searchingText) 
-            .then(gif);
+            .then(gif => {
+                this.setState({
+                    loading: false,
+                    gif: gif,
+                    searchingText: searchingText
+                });
+            })
     },
 
-    getGif: function(searchingText, callback) {
+    getGif: function(searchingText) {
         return new Promise (
             function (resolve, reject) {
                 var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  
